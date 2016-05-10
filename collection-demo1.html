@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8"/>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/underscore.js/1.7.0/underscore-min.js"></script>
+	<script src="js/backbone1.1.2.js"></script>
+</head>
+<body>
+	<script>
+		$(function(){
+			var Book = Backbone.Model.extend({
+				defaults: {
+					title: 'defalut',
+				},
+	
+				initialize: function(){
+					// 初始化实例构造函数
+				}
+			});
+
+			var BookShelf = Backbone.Collection.extend({
+				model: Book
+			});
+			var bk1 =new Book({title:'book1'});
+			var bk2 =new Book({title:'book2'});
+			var bk3 = new Book({title:'book3'});
+
+			// 第一种Collection初始化方法
+			var bkSlf1 = new BookShelf([bk1,bk2,bk3]);
+
+			// 第二种Collection初始化方法
+			var bkslf2 = new BookShelf;
+			bkslf2.add(bk1);
+			bkslf2.add(bk2);
+			bkslf2.add(bk3);
+			bkslf2.remove(bk3);
+
+			// 基于underscore.js还可以使用each的方法获取collection中的数据；
+			bkslf2.each(function(bk){
+				console.log(bk.get('title'));
+			});
+			console.log('=====================================================>');
+
+			bkSlf1.each(function(bk){
+				console.log(bk.get('title'));
+			})
+		});
+	</script>
+</body>
+</html>

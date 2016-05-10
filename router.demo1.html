@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8"/>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/underscore.js/1.7.0/underscore-min.js"></script>
+	<script src="js/backbone1.1.2.js"></script>
+</head>
+<body>
+	<a href="#actions">testActions</a>
+	<script type="text/javascript">
+		var AppRouter = Backbone.Router.extend({
+			routes: {
+				'*actions': 'defaultRoute'
+			},
+
+			defaultRoute: function(actions){
+				alert(actions);
+			}
+		});
+
+		var app_router = new AppRouter;
+		Backbone.history.start();
+	</script>
+</body>
+</html>

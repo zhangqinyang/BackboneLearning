@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>model-demo1</title>
+	<meta charset="utf-8"/>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://apps.bdimg.com/libs/underscore.js/1.7.0/underscore-min.js"></script>
+	<script src="js/backbone1.1.2.js"></script>
+</head>
+<body>
+	<script>
+	$(function(){
+		var Man = Backbone.Model.extend({
+			initialize: function(){
+				console.log('Hey, you create me!!');
+				// 初始化绑定监听
+				this.bind('change:name', function(){
+					var name = this.get('name');
+					alert('The name changed to '+ name);
+				});
+				this.bind('invalid',function(model,error){
+					alert(error);
+				})
+			},
+			defaults: {
+				name: 'zhangsan',
+				age: 38,
+				adress: '12345'
+			},
+			// 这里不能给初始属性
+			// adress: '12345'
+			aboutMe: function(){
+				return 'My name is '+this.get('name')+', and '+this.get('age')+' years old';
+			},
+			validate: function(attributes){
+				if (attributes.name == '') {
+					return 'name can not be empty!';
+				};
+			}
+		});
+		var man = new Man;
+		man.set({gender:'male'});
+		console.log(man.get('name'));
+		console.log(man.get('adress'));
+		console.log(man.get('gender'));
+		console.log(man.aboutMe());
+		// 触发绑定的监听事件change
+		// man.set({name:'123'});
+		// man.set({name:'456'});
+
+		//此处设置错误检查出现错误时set不会执行
+		// man.set({name:""},{'validate':true});
+
+		//此处设置错误检查出现错误时set会被执行导致错误的值赋给了属性
+		man.set({name:''});
+		man.save();
+		console.log('=========================');
+		console.log(man.get('name'));
+	});
+	</script>
+</body>
+</html>
